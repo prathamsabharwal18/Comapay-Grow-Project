@@ -10,7 +10,6 @@ import employeeRoutes from './routes/employeeRoutes.js';
 import projectRoutes from './routes/projectRoutes.js';
 
 dotenv.config();
-import stripeRoutes from './routes/stripeRoutes.js';
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -24,7 +23,6 @@ app.use('/api/courses', courseRoutes);
 app.use('/api/enroll', enrollRoutes);
 app.use('/api/employees', employeeRoutes);
 app.use('/api/projects', projectRoutes);
-app.use('/api/stripe', stripeRoutes);
 
 // MongoDB connection
 mongoose
