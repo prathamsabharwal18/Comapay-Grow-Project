@@ -1,0 +1,154 @@
+/* General Body/Page Styles (optional, but good for overall feel) */
+
+/* Profile Container - Overall Card-like Appearance */
+.profileContainer {
+    max-width: 900px;
+    margin: 3rem auto; /* More margin on top/bottom for breathing room */
+    padding: 2rem; /* Increased padding inside the container */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern, clean font */
+    background-color: #ffffff; /* White background for the card */
+    border-radius: 12px; /* More rounded corners */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); /* Softer, larger shadow */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Smooth hover effect */
+}
+
+.profileContainer:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+}
+
+
+/* Profile Top Section - Layout and Alignment */
+.profileTop {
+    display: flex;
+    flex-direction: column; /* Stack elements on smaller screens */
+    align-items: center; /* Center horizontally for stacked items */
+    gap: 2.5rem; /* Slightly more space between elements */
+    padding-bottom: 2rem; /* Space below the top section */
+    border-bottom: 1px solid #eee; /* Subtle separator line */
+    margin-bottom: 2rem;
+}
+
+@media (min-width: 768px) { /* Revert to horizontal on larger screens */
+    .profileTop {
+        flex-direction: row;
+        align-items: flex-start; /* Align to top for multi-line info */
+    }
+}
+
+/* Photo Placeholder - Profile Picture Styling */
+.photoPlaceholder {
+    width: 160px; /* Slightly larger */
+    height: 160px;
+    background: linear-gradient(135deg, #a1c4fd, #c2e9fb); /* Light gradient background */
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+    color: #555; /* Darker text for "Photo" */
+    font-size: 1.2rem;
+    font-weight: 600;
+    border: 3px solid #e0e0e0; /* Subtle border */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Smooth hover effect */
+}
+
+.photoPlaceholder:hover {
+    transform: scale(1.05) rotate(2deg); /* Slightly enlarge and rotate on hover */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Profile Information - Text Styling */
+.profileInfo p {
+    margin: 0.7rem 0; /* More vertical spacing between lines */
+    font-size: 1.15rem; /* Slightly larger font */
+    color: #444; /* Slightly darker text */
+    line-height: 1.4; /* Improve line spacing */
+}
+
+.profileInfo p strong {
+    color: #222; /* Make labels stand out more */
+    min-width: 120px; /* Give labels a consistent width for alignment */
+    display: inline-block;
+}
+
+/* Withdraw Button - Interactive Styling */
+.withdrawBtn {
+    margin-top: 1.5rem; /* More space above the button */
+    padding: 0.8rem 1.8rem; /* Larger padding for a more prominent button */
+    background-color: #007bff; /* A standard blue color */
+    color: white;
+    border: none;
+    border-radius: 6px; /* Slightly more rounded corners */
+    cursor: pointer;
+    font-weight: 700; /* Bolder text */
+    letter-spacing: 0.5px; /* Slight letter spacing */
+    transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out, box-shadow 0.3s ease-in-out;
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.25); /* Subtle shadow for depth */
+}
+
+.withdrawBtn:hover:not(:disabled) {
+    background-color: #0056b3; /* Darker blue on hover */
+    transform: translateY(-2px); /* Slight lift effect */
+    box-shadow: 0 6px 15px rgba(0, 123, 255, 0.35); /* Enhanced shadow on hover */
+}
+
+.withdrawBtn:active:not(:disabled) {
+    transform: translateY(0); /* Press down effect */
+    box-shadow: 0 2px 5px rgba(0, 123, 255, 0.2);
+}
+
+.withdrawBtn:disabled {
+    background-color: #cccccc; /* Lighter grey for disabled */
+    color: #999999;
+    cursor: not-allowed;
+    box-shadow: none; /* No shadow when disabled */
+    transform: none; /* No transform when disabled */
+}
+
+/* Withdraw Message - Feedback Styling */
+.withdrawMsg {
+    margin-top: 1rem;
+    font-size: 1rem; /* Slightly larger font */
+    color: #28a745; /* A standard success green */
+    font-weight: 500;
+    animation: fadeIn 0.5s ease-out; /* Simple fade-in animation */
+}
+
+/* Charts Container - Layout */
+.chartsContainer {
+    display: flex;
+    gap: 2.5rem; /* Adjusted gap */
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-top: 2rem; /* Padding above charts */
+}
+
+/* Chart Box - Individual Chart Styling */
+.chartBox {
+    width: 100%; /* Full width on small screens */
+    max-width: 320px; /* Maximum width for charts */
+    background-color: #fefefe; /* Slightly off-white background */
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Soft shadow */
+    padding: 1.5rem; /* Padding inside chart box */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.chartBox:hover {
+    transform: translateY(-3px); /* Subtle lift on hover */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Keyframe for fade-in animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

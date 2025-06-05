@@ -1,0 +1,98 @@
+.myCoursesBody {
+  background-color: #f4f6f8;
+  margin: 0;
+  padding: 0;
+}
+.myCoursesContainer {
+  background-color: #f9f9f9;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+.myCoursesContent {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.myCoursesTitle {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.noCoursesMsg {
+  font-size: 18px;
+  color: #555;
+}
+
+.courseCardContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.courseCard {
+  position: relative;
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding-bottom: 40px; /* leave room for the button */
+}
+
+.courseImage {
+  height: 160px;
+  background-size: cover;
+  background-position: center;
+}
+
+.courseInfo {
+  padding: 15px;
+}
+
+.courseInfo h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.courseInfo p {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.courseDifficulty {
+  display: inline-block;
+  background-color: #e0e0e0;
+  color: #333;
+  border-radius: 12px;
+  padding: 4px 10px;
+  font-size: 12px;
+  margin: 4px 4px 0 0;
+}
+
+.completeButton {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  padding: 6px 12px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.completeButton:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+
+.completeButton:hover {
+  background-color: #218838;
+}
+

@@ -1,0 +1,105 @@
+/* Navbar */
+.navbar {
+  position: relative;
+  top: 0px;
+  display: flex;
+  width: 100vw;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  padding: 0.5rem 2rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+.logo-text {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #004d40;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+.navbar .nav-buttons {
+  display: flex;
+  gap: 2rem;
+}
+.navbar .nav-buttons button {
+  background: none;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 999px;
+  transition: background 0.3s;
+  cursor: pointer;
+}
+.navbar .nav-buttons button.active,
+.navbar .nav-buttons button:hover {
+  background: #e0ebff;
+  color: #0047b3;
+}
+.navbar .profile img {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+.navbar .profile img:hover {
+  transform: scale(1.05);
+}
+
+/* Responsive Navbar */
+@media (max-width: 768px) {
+  .navbar {
+    position: relative;
+    /* flex-wrap: wrap; */
+    padding: 0.5rem 1rem;
+  }
+  .navbar .nav-buttons {
+    width: 100%;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+  .logo-container {
+    width: 100%;
+    text-align: center;
+    margin: 0.5rem 0;
+  }
+  .navbar .profile {
+    /* position: absolute; */
+    top: 0.5rem;
+    right: 1rem;
+  }
+}
+/* Add this to your existing Navbar.module.css file */
+
+.logout-btn {
+    background-color: #dc3545; /* Red color for logout */
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    margin-right: 15px; /* Space between logout button and profile image */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.logout-btn:hover {
+    background-color: #c82333; /* Darker red on hover */
+    transform: translateY(-1px); /* Slight lift effect */
+}
+
+.logout-btn:active {
+    transform: translateY(0); /* Press down effect */
+}
+
+/* You might want to adjust .profile to accommodate the button */
+.profile {
+    display: flex; /* Ensure elements inside are flexible */
+    align-items: center; /* Vertically align them */
+    /* Add any other existing .profile styles here */
+}

@@ -1,0 +1,88 @@
+.projectsContainer {
+  background-color: #f9f9f9;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+.projectsContent {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.sectionTitle {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.noDataMsg {
+  font-size: 18px;
+  color: #555;
+}
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  position: relative;
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding-bottom: 20px;
+}
+
+.cardImage {
+  height: 160px;
+  background-size: cover;
+  background-position: center;
+}
+
+.cardInfo {
+  padding: 15px;
+}
+
+.cardInfo h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.cardInfo p {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+.tag {
+  display: inline-block;
+  background-color: #e0e0e0;
+  color: #333;
+  border-radius: 12px;
+  padding: 4px 10px;
+  font-size: 12px;
+  margin: 4px 4px 0 0;
+}
+
+.tagFilter {
+  margin-bottom: 20px;
+}
+
+.filterButton {
+  margin: 4px;
+  padding: 6px 12px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  background-color: #e0e0e0;
+  color: #333;
+  font-size: 14px;
+}
+
+.active {
+  background-color: #007bff;
+  color: #fff;
+}

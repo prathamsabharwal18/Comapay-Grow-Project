@@ -1,0 +1,133 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: Arial, sans-serif; background: #f5f7fa; color: #333; }
+
+/* .navbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.5rem 2rem; background: #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+} */
+/* .logo { font-size: 1.5rem; color: #0047b3; font-weight: bold; }
+.nav-buttons { display: flex; gap: 1rem; } */
+.nav-btn {
+  background: none; border: none;
+  padding: 0.5rem 1rem; border-radius: 999px;
+  transition: background 0.3s, color 0.3s; cursor: pointer;
+}
+.nav-btn.active, .nav-btn:hover {
+  background: #e0ebff; color: #0047b3;
+}
+
+.admin-main {
+  max-width: 1200px; margin: 2rem auto; padding: 0 2rem;
+  scroll-behavior: auto;
+}
+.courses-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  max-height: 70vh;
+  overflow-y: auto;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+.add-btn {
+  display: block; margin: 1rem auto;
+  padding: 0.75rem 1.5rem;
+  background: #0047b3; color: #fff;
+  border: none; border-radius: 20px;
+  cursor: pointer; transition: background 0.3s;
+}
+.add-btn:hover { background: #003399; }
+
+/* Course Card */
+.course-card {
+  background: #fff; border-radius: 20px;
+  padding: 1rem; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  display: flex; flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.4s, box-shadow 0.4s;
+}
+.course-card:hover{
+  transform: translateY(-7px);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
+}
+.course-card h3 { margin-bottom: 0.5rem; color: #0047b3; }
+.course-card p { flex: 1; margin-bottom: 1rem; }
+.tags {
+  display: flex; gap: 0.5rem;
+  flex-wrap: wrap; margin-bottom: 1rem;
+}
+.tags span {
+  background: #e0ebff; color: #0047b3;
+  padding: 0.25rem 0.5rem; border-radius: 12px;
+  font-size: 0.85rem;
+}
+.card-actions {
+  display: flex; justify-content: flex-end; gap: 0.5rem;
+}
+.card-actions button {
+  padding: 0.5rem; border: none; border-radius: 12px;
+  cursor: pointer;
+}
+.card-actions .edit-btn {
+  background: #0080ff; color: #fff;
+}
+.card-actions .remove-btn {
+  background: #ff4d4d; color: #fff;
+}
+
+/* Modals & overlay */
+.overlay {
+  position: fixed; top: 0px; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5);
+  overflow-y: auto;
+}
+.hidden { display: none; }
+.modal {
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff; padding: 2rem;
+  border-radius: 12px;
+  width: 90%; max-width: 500px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  max-height:80vh;
+  overflow-y: auto;
+}
+.modal p, .modal h3, .modal label { margin-bottom: 0.5rem; }
+.modal textarea, .modal input, .modal select {
+  width: 100%; padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc; border-radius: 6px;
+}
+.tags-input { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.tags-input span {
+  background: #cfe0ff; color: #0047b3;
+  padding: 0.25rem 0.5rem; border-radius: 12px;
+  cursor: default;
+}
+.tags-input span:hover {
+  cursor: pointer;
+}
+.small-btn {
+  background: #e0ebff; border: none;
+  padding: 0.4rem 0.8rem; border-radius: 12px;
+  cursor: pointer;
+}
+.primary-btn {
+  background: #0047b3; color: #fff;
+  border: none; padding: 0.5rem 1rem;
+  border-radius: 12px;
+}
+.secondary-btn {
+  background: #ccc; border: none;
+  padding: 0.5rem 1rem; border-radius: 12px;
+}
+.modal-actions { display: flex; justify-content: flex-end; gap: 1rem; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .courses-container { grid-template-columns: 1fr; }
+  .add-btn { width: 100%; }
+}
