@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import styles from "../../styles/Admin/CoursePage.module.css";
+import styles from "../../styles/Admin/Coursepage.module.css";
 import AdminNavbar from '../../components/AdminNavbar';
 import axios from 'axios';
 
