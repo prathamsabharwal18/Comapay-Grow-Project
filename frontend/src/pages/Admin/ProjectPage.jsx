@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import styles from '../../styles/Admin/Projectpage.module.css'; // Your CSS module
+import styles from '../../styles/Admin/ProjectPage.module.css'; // Your CSS module
 import Navbar from '../../components/AdminNavbar';
 
 const ProjectPage = () => {
