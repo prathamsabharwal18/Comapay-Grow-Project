@@ -106,6 +106,7 @@ const AllEmployeesPage = () => {
         if (!employeeToDelete) return;
 
         try {
+            console.log(employeeToDelete.userId);
             // Assuming your backend uses userId for delete, adjust if it uses _id
             await axios.delete(`https://comapay-grow-project.onrender.com/api/employees/${employeeToDelete.userId}`);
             alert('Employee deleted successfully!');
