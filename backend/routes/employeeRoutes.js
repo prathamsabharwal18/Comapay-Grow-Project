@@ -8,6 +8,7 @@ import { deleteEmployee, /* ... other employee controller functions */ } from '.
 const router = express.Router();
 
 // ✅ Get all employees (userId and name only)
+router.delete('/remove/:userId', deleteEmployee);
 router.get('/', async (req, res) => {
   try {
     const employees = await Employee.find({}, 'userId name Email role badges tags');
@@ -383,6 +384,5 @@ router.get('/profile/:userId', async (req, res) => {
   }
 });
 router.post('/register', registerEmployee);
-router.delete('/remove/:userId', deleteEmployee);
 
 export default router;
