@@ -226,7 +226,7 @@
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     max-height: 90vh; /* Allow modal to take up more screen height */
     overflow-y: auto; /* Make modal content scrollable */
-    position: relative;
+    position: absolute;
     z-index: 1000;
 }
 
