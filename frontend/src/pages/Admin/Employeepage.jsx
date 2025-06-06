@@ -90,8 +90,9 @@ const AllEmployeesPage = () => {
     if (error) return <p className={styles['error-message']}>{error}</p>;
 
     return (
+        <>
+      <Navbar/>
         <main className={styles['admin-main']}>
-            <Navbar />
             <h1 className={styles['page-title']}>All Employees</h1>
 
             <button
@@ -239,6 +240,7 @@ const AllEmployeesPage = () => {
                 </>
             )}
         </main>
+        </>
     );
 };
 
