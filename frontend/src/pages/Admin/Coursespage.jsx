@@ -11,14 +11,18 @@ const CoursesPage = () => {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
-    difficulty: '', // ✅ added
+    difficulty: '',
     tags: [],
     imageUrl: '',
     badge: [],
-    amount: 0
+    amount: 0,
+    videoURL: '' // ✅ ADDED: New field for video URL
   });
   const [tagInput, setTagInput] = useState('');
   const [badgeInput, setBadgeInput] = useState('');
+
+  // Hardcoded backend URL for consistency with previous discussion
+  const RENDER_BACKEND_URL = 'https://comapay-grow-project.onrender.com';
 
   useEffect(() => {
     fetchCourses();
@@ -26,7 +30,7 @@ const CoursesPage = () => {
 
   const fetchCourses = async () => {
     try {
-      const res = await axios.get('https://comapay-grow-project.onrender.com/api/courses');
+      const res = await axios.get(`${RENDER_BACKEND_URL}/api/courses`);
       setCourses(res.data);
     } catch (err) {
       console.error('Failed to fetch courses:', err);
@@ -35,7 +39,7 @@ const CoursesPage = () => {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`https://comapay-grow-project.onrender.com/api/courses/${selectedId}`);
+      await axios.delete(`${RENDER_BACKEND_URL}/api/courses/${selectedId}`);
       fetchCourses();
       setShowConfirmModal(false);
     } catch (err) {
@@ -48,38 +52,42 @@ const CoursesPage = () => {
     setFormData({
       title: course?.title || '',
       description: course?.description || '',
-      difficulty: course?.difficulty || '', // ✅ added
+      difficulty: course?.difficulty || '',
       tags: course?.tags || [],
       imageUrl: course?.imageUrl || '',
       badge: course?.badge || [],
-      amount: course?.amount || 0
+      amount: course?.amount || 0,
+      videoURL: course?.videoURL || '' // ✅ ADDED: Populate videoURL when editing
     });
     setShowEditModal(true);
   };
 
   const saveCourse = async () => {
-    const { title, description, amount, difficulty } = formData;
+    const { title, description, amount, difficulty, videoURL } = formData; // Destructure videoURL
+
     if (
       title.trim() === '' ||
       description.trim() === '' ||
-      difficulty.trim() === '' || // ✅ validate difficulty
+      difficulty.trim() === '' ||
       amount === '' ||
-      isNaN(amount)
+      isNaN(amount) ||
+      videoURL.trim() === '' // ✅ ADDED: Validate videoURL
     ) {
-      alert('Please fill out all required fields and enter a valid number for amount.');
+      alert('Please fill out all required fields (including Video URL) and enter a valid number for amount.');
       return;
     }
 
     const payload = {
       ...formData,
       amount: Number(formData.amount),
+      // videoURL is already part of formData, so it's included by `...formData`
     };
 
     try {
       if (selectedId) {
-        await axios.put(`https://comapay-grow-project.onrender.com/api/courses/${selectedId}`, payload);
+        await axios.put(`${RENDER_BACKEND_URL}/api/courses/${selectedId}`, payload);
       } else {
-        await axios.post('https://comapay-grow-project.onrender.com/api/courses', payload);
+        await axios.post(`${RENDER_BACKEND_URL}/api/courses`, payload);
       }
       fetchCourses();
       setShowEditModal(false);
@@ -126,6 +134,11 @@ const CoursesPage = () => {
               <h3>{course.title}</h3>
               <p>{course.description}</p>
               <p><strong>Difficulty:</strong> {course.difficulty}</p>
+              {course.videoURL && ( // ✅ DISPLAY: Optionally display the video URL
+                <p>
+                  <strong>Video:</strong> <a href={course.videoURL} target="_blank" rel="noopener noreferrer">Watch Course</a>
+                </p>
+              )}
               <div className={styles.tags}>
                 {course.tags.map((tag, i) => <span key={i}>{tag}</span>)}
               </div>
@@ -176,6 +189,15 @@ const CoursesPage = () => {
 
             <label>Image URL</label>
             <input type="text" value={formData.imageUrl} onChange={e => setFormData({ ...formData, imageUrl: e.target.value })} />
+
+            {/* ✅ ADDED: Video URL Input Field */}
+            <label>Video URL</label>
+            <input
+              type="text"
+              value={formData.videoURL}
+              onChange={e => setFormData({ ...formData, videoURL: e.target.value })}
+              placeholder="e.g., https://youtube.com/watch?v=..."
+            />
 
             <label>Tags</label>
             <div className={styles['tags-input']}>
