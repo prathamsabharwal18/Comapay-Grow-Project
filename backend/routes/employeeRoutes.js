@@ -2,6 +2,7 @@ import express from 'express';
 import Employee from '../models/Employee.js';
 import Course from '../models/Course.js';
 import Project from '../models/Project.js';
+import { registerEmployee } from '../controllers/employeeController.js';
 
 const router = express.Router();
 
@@ -380,6 +381,7 @@ router.get('/profile/:userId', async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+router.post('/register', registerEmployee);
 
 
 export default router;
