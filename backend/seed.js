@@ -4,8 +4,10 @@ import Employee from './models/Employee.js'; // Ensure correct path to your mode
 import Admin from './models/Admin.js';     // Ensure correct path to your models
 import Course from './models/Course.js';   // Ensure correct path to your models
 import Project from './models/Project.js'; // Ensure correct path to your models
+import dotenv from 'dotenv';
 
-const MONGO_URI = 'mongodb://localhost:27017/companygrow';
+dotenv.config();
+const MONGO_URI = process.env.MONGO_URI;
 
 async function seed() {
   try {
