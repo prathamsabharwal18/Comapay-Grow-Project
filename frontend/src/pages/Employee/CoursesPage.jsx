@@ -17,14 +17,14 @@ const CoursesPage = () => {
       .then(res => setCourses(res.data))
       .catch(err => console.error(err));
 
-    axios.get(`http://localhost:5000/api/employees/${userId}`)
+    axios.get(`https://comapay-grow-project.onrender.com/api/employees/${userId}`)
       .then(res => setEnrolledCourses(res.data.enrolledCourses || []))
       .catch(err => console.error(err));
   }, [userId]);
 
   const handleEnroll = async (courseId) => {
     try {
-      await axios.post('http://localhost:5000/api/enroll', {
+      await axios.post('https://comapay-grow-project.onrender.com/api/enroll', {
         userId,   // changed from employeeId
         courseId,
       });
