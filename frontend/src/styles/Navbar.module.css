@@ -1,6 +1,6 @@
 /* Navbar */
 .navbar {
-  position: relative;
+  position: sticky;
   top: 0px;
   display: flex;
   width: 100vw;
