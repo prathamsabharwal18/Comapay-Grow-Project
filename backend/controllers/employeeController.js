@@ -67,6 +67,7 @@ export const deleteEmployee = async (req, res) => {
         const { userId } = req.params; // Get userId from URL parameters
 
         const deletedEmployee = await Employee.findOneAndDelete({ userId });
+        console.log('Deleted Employee:', deletedEmployee);
 
         if (!deletedEmployee) {
             return res.status(404).json({ message: 'Employee not found.' });
