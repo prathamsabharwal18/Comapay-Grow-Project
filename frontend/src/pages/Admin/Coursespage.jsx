@@ -16,7 +16,7 @@ const CoursesPage = () => {
     imageUrl: '',
     badge: [],
     amount: 0,
-    videoURL: '' // ✅ ADDED: New field for video URL
+    VideoUrl: '' // ✅ ADDED: New field for video URL
   });
   const [tagInput, setTagInput] = useState('');
   const [badgeInput, setBadgeInput] = useState('');
@@ -57,13 +57,13 @@ const CoursesPage = () => {
       imageUrl: course?.imageUrl || '',
       badge: course?.badge || [],
       amount: course?.amount || 0,
-      videoURL: course?.videoURL || '' // ✅ ADDED: Populate videoURL when editing
+      VideoUrl: course?.VideoUrl || '' // ✅ ADDED: Populate videoURL when editing
     });
     setShowEditModal(true);
   };
 
   const saveCourse = async () => {
-    const { title, description, amount, difficulty, videoURL } = formData; // Destructure videoURL
+    const { title, description, amount, difficulty, VideoUrl } = formData; // Destructure videoURL
 
     if (
       title.trim() === '' ||
@@ -71,7 +71,7 @@ const CoursesPage = () => {
       difficulty.trim() === '' ||
       amount === '' ||
       isNaN(amount) ||
-      videoURL.trim() === '' // ✅ ADDED: Validate videoURL
+      VideoUrl.trim() === '' // ✅ ADDED: Validate videoURL
     ) {
       alert('Please fill out all required fields (including Video URL) and enter a valid number for amount.');
       return;
@@ -134,9 +134,9 @@ const CoursesPage = () => {
               <h3>{course.title}</h3>
               <p>{course.description}</p>
               <p><strong>Difficulty:</strong> {course.difficulty}</p>
-              {course.videoURL && ( // ✅ DISPLAY: Optionally display the video URL
+              {course.videoUrl && ( // ✅ DISPLAY: Optionally display the video URL
                 <p>
-                  <strong>Video:</strong> <a href={course.videoURL} target="_blank" rel="noopener noreferrer">Watch Course</a>
+                  <strong>Video:</strong> <a href={course.videoUrl} target="_blank" rel="noopener noreferrer">Watch Course</a>
                 </p>
               )}
               <div className={styles.tags}>
@@ -194,8 +194,8 @@ const CoursesPage = () => {
             <label>Video URL</label>
             <input
               type="text"
-              value={formData.videoURL}
-              onChange={e => setFormData({ ...formData, videoURL: e.target.value })}
+              value={formData.VideoUrl}
+              onChange={e => setFormData({ ...formData, VideoUrl: e.target.value })}
               placeholder="e.g., https://youtube.com/watch?v=..."
             />
 
