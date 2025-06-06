@@ -14,7 +14,7 @@ const Navbar = () => {
   const handleLogout = async () => {
     try {
       // Call your backend logout endpoint (optional, but good practice for extensibility)
-      await axios.post('http://localhost:5000/api/auth/logout'); 
+      await axios.post('https://comapay-grow-project.onrender.com/api/auth/logout'); 
       
       // Clear user data from localStorage
       localStorage.removeItem('userId');
