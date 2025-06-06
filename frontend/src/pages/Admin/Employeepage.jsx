@@ -17,10 +17,8 @@ const AllEmployeesPage = () => {
         userId: '',
         Email: '',
         password: '',
-        role: 'employee', // Default role based on your model
-        amount: 0,       // Default amount based on your model
-        tags: '',        // Will be comma-separated string in input, converted to array on submit
-        badges: '',      // Will be comma-separated string in input, converted to array on submit
+        role: 'employee', // Default role based on your model     // Default amount based on your model
+        tags: '',        // Will be comma-separated string in input, converted to array on submit     // Will be comma-separated string in input, converted to array on submit
     });
 
     useEffect(() => {
@@ -58,9 +56,9 @@ const AllEmployeesPage = () => {
             Email: newEmployee.Email,
             password: newEmployee.password,
             role: newEmployee.role,
-            amount: Number(newEmployee.amount), // Ensure amount is a number
+            // amount: Number(newEmployee.amount), // Ensure amount is a number
             tags: newEmployee.tags.split(',').map(s => s.trim()).filter(s => s),
-            badges: newEmployee.badges.split(',').map(b => b.trim()).filter(b => b),
+            // badges: newEmployee.badges.split(',').map(b => b.trim()).filter(b => b),
         };
 
         try {
@@ -82,7 +80,7 @@ const AllEmployeesPage = () => {
     const handleCloseAddModal = () => {
         setShowAddModal(false);
         setNewEmployee({ // Reset form data when closing
-            name: '', userId: '', Email: '', password: '', role: 'employee', amount: 0, tags: '', badges: ''
+            name: '', userId: '', Email: '', password: '', role: 'employee', tags: ''
         });
     };
 
@@ -118,9 +116,9 @@ const AllEmployeesPage = () => {
                                 <p className={styles['employee-detail']}><strong>ID:</strong> {employee.userId}</p>
                                 <p className={styles['employee-detail']}><strong>Role:</strong> {employee.role}</p>
                                 <p className={styles['employee-detail']}><strong>Email:</strong> {employee.Email || 'N/A'}</p>
-                                <p className={styles['employee-detail']}>
+                                {/* <p className={styles['employee-detail']}>
                                     <strong>Amount:</strong> ₹{employee.amount !== undefined ? employee.amount : 'N/A'}
-                                </p>
+                                </p> */}
                                 <p className={styles['employee-detail']}>
                                     <strong>Badges:</strong>{' '}
                                     {employee.badges && employee.badges.length > 0 ? employee.badges.join(', ') : 'None'}
