@@ -69,9 +69,9 @@ const MyCoursesPage = () => {
   };
 
   // New function to handle card click (navigation)
-  const handleCardClick = (videourl) => {
-    if (videourl) {
-      window.open(videourl, '_blank'); // Opens the URL in a new tab
+  const handleCardClick = (Videourl) => {
+    if (Videourl) {
+      window.open(Videourl, '_blank'); // Opens the URL in a new tab
     } else {
       alert('No video URL available for this course.');
     }
@@ -92,8 +92,8 @@ const MyCoursesPage = () => {
               <div
                 className={styles.courseCard}
                 key={course._id}
-                onClick={() => handleCardClick(course.videourl)} // Assume 'videoURL' is the field name
-                style={{ cursor: course.videourl ? 'pointer' : 'default' }} // Add cursor styling
+                onClick={() => handleCardClick(course.Videourl)} // Assume 'videoURL' is the field name
+                style={{ cursor: course.Videourl ? 'pointer' : 'default' }} // Add cursor styling
               >
                 <div
                   className={styles.courseImage}
