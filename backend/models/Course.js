@@ -29,6 +29,10 @@ const courseSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  VideoUrl: {
+    type: String,
+    required: true,
+  },
 });
 
 const Course = mongoose.model('Course', courseSchema);

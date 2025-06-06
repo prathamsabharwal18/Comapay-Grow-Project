@@ -84,6 +84,7 @@ async function seed() {
         imageUrl: "https://www.patterns.dev/img/reactjs/react-logo@3x.svg",
         badge: "React Rookie",
         amount: 1000,
+        VideoUrl:"https://www.youtube.com/watch?v=SqcY0GlETPk&t=163s"
       },
       {
         title: "Node.js for Beginners",
@@ -94,6 +95,7 @@ async function seed() {
         imageUrl: "https://upload.wikimedia.org/wikipedia/commons/d/d9/Node.js_logo.svg",
         badge: "Node Newbie",
         amount: 1000,
+        VideoUrl:"https://www.youtube.com/watch?v=SqcY0GlETPk&t=163s"
       },
       {
         title: "Intermediate JavaScript",
@@ -104,6 +106,7 @@ async function seed() {
         imageUrl: "https://austingil.com/wp-content/uploads/JavaScript-Blog-Cover.svg",
         badge: "JavaScript Pro",
         amount: 1000,
+        VideoUrl:"https://www.youtube.com/watch?v=SqcY0GlETPk&t=163s"
       },
       {
         title: "MongoDB Essentials",
@@ -114,6 +117,7 @@ async function seed() {
         imageUrl: "https://www.opc-router.com/wp-content/uploads/2021/03/mongodb_thumbnail-200x269.png",
         badge: "MongoDB Master",
         amount: 1000,
+        VideoUrl:"https://www.youtube.com/watch?v=SqcY0GlETPk&t=163s"
       },
       {
         title: "Advanced CSS",
@@ -124,6 +128,7 @@ async function seed() {
         imageUrl: "https://www.oxfordwebstudio.com/user/pages/06.da-li-znate/sta-je-css/sta-je-css.png",
         badge: "CSS Guru",
         amount: 1000,
+        VideoUrl:"https://www.youtube.com/watch?v=SqcY0GlETPk&t=163s"
       },
       {
         title: "Express.js Crash Course",
@@ -134,6 +139,7 @@ async function seed() {
         imageUrl: "https://miro.medium.com/v2/resize:fit:1400/format:webp/1*7fe7SkSNP6Y8PvTRm4Jl6Q.png",
         badge: "Express Expert",
         amount: 1000,
+        VideoUrl:"https://www.youtube.com/watch?v=SqcY0GlETPk&t=163s"
       },
       {
         title: "Fullstack Project Bootcamp",
@@ -144,6 +150,7 @@ async function seed() {
         imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqMbt6nB0aY8MVgACJexsZMo2KBbNoc8azyQ",
         badge: "Fullstack Hero",
         amount: 1000,
+        VideoUrl:"https://www.youtube.com/watch?v=SqcY0GlETPk&t=163s"
       },
       {
         title: "Git & GitHub",
@@ -154,6 +161,7 @@ async function seed() {
         imageUrl: "https://media.geeksforgeeks.org/wp-content/cdn-uploads/20200529213529/Git-vs-GitHub.png",
         badge: "Git Guru",
         amount: 1000,
+        VideoUrl:"https://www.youtube.com/watch?v=SqcY0GlETPk&t=163s"
       },
       {
         title: "TypeScript Fundamentals",
@@ -164,6 +172,7 @@ async function seed() {
         imageUrl: "https://shanelonergan.github.io/assets/img/TypeScriptImage.jpeg",
         badge: "Typemaster",
         amount: 1000,
+        VideoUrl:"https://www.youtube.com/watch?v=SqcY0GlETPk&t=163s"
       },
       {
         title: "Frontend Optimization Techniques",
@@ -174,6 +183,7 @@ async function seed() {
         imageUrl: "https://images.unsplash.com/photo-1518770660439-4636190af475?fit=crop&w=800&q=80",
         badge: "Frontend Speedster",
         amount: 1000,
+        VideoUrl:"https://www.youtube.com/watch?v=SqcY0GlETPk&t=163s"
       }
     ];
 
