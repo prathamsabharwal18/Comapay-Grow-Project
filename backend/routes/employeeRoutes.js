@@ -383,6 +383,6 @@ router.get('/profile/:userId', async (req, res) => {
   }
 });
 router.post('/register', registerEmployee);
-router.delete('/:userId', deleteEmployee);
+router.delete('/remove/:userId', deleteEmployee);
 
 export default router;
