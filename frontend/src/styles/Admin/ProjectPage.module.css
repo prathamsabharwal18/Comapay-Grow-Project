@@ -8,6 +8,7 @@
     color: #222;
     background-color: #f5f7fa;
     min-height: 100vh;
+    box-sizing: border-box;
 }
 
 /* NEW CLASS: Apply this to your h1 element in JSX */
@@ -247,6 +248,7 @@
     resize: vertical;
     min-height: 90px;
     line-height: 1.4;
+    box-sizing: border-box;
 }
 
 /* Focus styles for the new classes */
