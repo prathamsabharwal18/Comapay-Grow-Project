@@ -22,11 +22,11 @@ const EmployeeProjectsPage = () => {
 
       try {
         // Fetch projects assigned to this employee (current only)
-        const empRes = await axios.get(`/api/projects/myprojects?userId=${userId}`);
+        const empRes = await axios.get(`https://comapay-grow-project.onrender.com/api/projects/myprojects?userId=${userId}`);
         const empProjects = empRes.data.filter(p => p.status === 'current');
 
         // Fetch all upcoming projects (globally)
-        const upcomingRes = await axios.get('/api/projects/upcoming');
+        const upcomingRes = await axios.get('https://comapay-grow-project.onrender.com/api/projects/upcoming');
         const upcomingProjects = upcomingRes.data;
 
         // Collect tags from upcoming projects

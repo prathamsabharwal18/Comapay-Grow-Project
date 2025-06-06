@@ -44,7 +44,7 @@ const EmployeeProfilePage = () => {
         return;
       }
       try {
-        const res = await axios.get(`/api/employees/${currentUserId}`); // Use currentUserId
+        const res = await axios.get(`https://comapay-grow-project.onrender.com/api/employees/${currentUserId}`); // Use currentUserId
         setEmployee(res.data);
       } catch (err) {
         setError('Failed to fetch employee data. User might not exist or network issue.');

@@ -26,7 +26,7 @@ const CoursesPage = () => {
 
   const fetchCourses = async () => {
     try {
-      const res = await axios.get('/api/courses');
+      const res = await axios.get('https://comapay-grow-project.onrender.com/api/courses');
       setCourses(res.data);
     } catch (err) {
       console.error('Failed to fetch courses:', err);
@@ -35,7 +35,7 @@ const CoursesPage = () => {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`/api/courses/${selectedId}`);
+      await axios.delete(`https://comapay-grow-project.onrender.com/api/courses/${selectedId}`);
       fetchCourses();
       setShowConfirmModal(false);
     } catch (err) {
@@ -77,9 +77,9 @@ const CoursesPage = () => {
 
     try {
       if (selectedId) {
-        await axios.put(`/api/courses/${selectedId}`, payload);
+        await axios.put(`https://comapay-grow-project.onrender.com/api/courses/${selectedId}`, payload);
       } else {
-        await axios.post('/api/courses', payload);
+        await axios.post('https://comapay-grow-project.onrender.com/api/courses', payload);
       }
       fetchCourses();
       setShowEditModal(false);

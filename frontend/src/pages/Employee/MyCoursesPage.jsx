@@ -13,11 +13,11 @@ const MyCoursesPage = () => {
       const userId = localStorage.getItem('userId');
       try {
         // Fetch enrolled courses
-        const enrolledRes = await axios.get(`http://localhost:5000/api/employees/${userId}/enrolledCourses`);
+        const enrolledRes = await axios.get(`https://comapay-grow-project.onrender.com/api/employees/${userId}/enrolledCourses`);
         setMyCourses(enrolledRes.data);
 
         // Fetch completed courses
-        const completedRes = await axios.get(`http://localhost:5000/api/employees/${userId}/completedCourses`);
+        const completedRes = await axios.get(`https://comapay-grow-project.onrender.com/api/employees/${userId}/completedCourses`);
         const completedIds = new Set(completedRes.data.map(course => course._id));
         setCompletedCourseIds(completedIds);
       } catch (err) {
@@ -33,7 +33,7 @@ const MyCoursesPage = () => {
   const handleComplete = async (courseId, title) => {
     const userId = localStorage.getItem('userId');
     try {
-      await axios.post(`http://localhost:5000/api/employees/${userId}/completeCourse`, {
+      await axios.post(`https://comapay-grow-project.onrender.com/api/employees/${userId}/completeCourse`, {
         courseId,
       });
 

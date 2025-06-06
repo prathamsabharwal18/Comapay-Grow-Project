@@ -13,7 +13,7 @@ const AllEmployeesPage = () => {
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
-        const res = await axios.get('/api/employees'); // Endpoint to get all employees
+        const res = await axios.get('https://comapay-grow-project.onrender.com/api/employees'); // Endpoint to get all employees
         setEmployees(res.data);
       } catch (err) {
         console.error('Error fetching employees:', err);

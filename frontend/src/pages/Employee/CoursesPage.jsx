@@ -13,7 +13,7 @@ const CoursesPage = () => {
   const userId = localStorage.getItem('userId'); // changed from employeeId
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/courses')
+    axios.get('https://comapay-grow-project.onrender.com/api/courses')
       .then(res => setCourses(res.data))
       .catch(err => console.error(err));
 

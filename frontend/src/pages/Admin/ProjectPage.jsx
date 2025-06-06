@@ -35,7 +35,7 @@ const ProjectPage = () => {
 
   const fetchProjects = async () => {
     try {
-      const res = await axios.get('/api/projects');
+      const res = await axios.get('https://comapay-grow-project.onrender.com/api/projects');
       setProjects(res.data);
     } catch (err) {
       console.error('Error fetching projects:', err);
@@ -44,7 +44,7 @@ const ProjectPage = () => {
 
   const fetchEmployees = async () => {
     try {
-      const res = await axios.get('/api/employees');
+      const res = await axios.get('https://comapay-grow-project.onrender.com/api/employees');
       setEmployees(res.data);
     } catch (err) {
       console.error('Error fetching employees:', err);
@@ -54,7 +54,7 @@ const ProjectPage = () => {
   const handleDelete = async (projectId) => {
     try {
       console.log('Deleting project:', projectId);
-      await axios.delete(`/api/projects/${projectId}`);
+      await axios.delete(`https://comapay-grow-project.onrender.com/api/projects/${projectId}`);
       fetchProjects();
       setConfirmDelete(null);
     } catch (err) {
@@ -64,7 +64,7 @@ const ProjectPage = () => {
 
   const handleComplete = async (projectId) => {
     try {
-      await axios.post(`/api/projects/${projectId}/complete`);
+      await axios.post(`https://comapay-grow-project.onrender.com/api/projects/${projectId}/complete`);
       fetchProjects();
     } catch (err) {
       console.error('Complete error:', err);
@@ -88,7 +88,7 @@ const ProjectPage = () => {
     };
 
     try {
-      await axios.post('/api/projects', payload);
+      await axios.post('https://comapay-grow-project.onrender.com/api/projects', payload);
       setAddingProject(false);
       setAddingTags([]);
       fetchProjects();
@@ -134,7 +134,7 @@ const ProjectPage = () => {
     };
 
     try {
-      await axios.put(`/api/projects/${editingProject._id}`, payload);
+      await axios.put(`https://comapay-grow-project.onrender.com/api/projects/${editingProject._id}`, payload);
       setEditingProject(null);
       setEditingAssignedEmployees('');
       setAssignedEmployeesChanged(false);
