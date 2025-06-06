@@ -64,6 +64,7 @@ export const registerEmployee = async (req, res) => {
 };
 export const deleteEmployee = async (req, res) => {
     try {
+        console.log(req);
         const { userId } = req.params; // Get userId from URL parameters
         console.log('Attempting to delete employee with userId:', userId);
         const deletedEmployee = await Employee.findOneAndDelete({ userId });
