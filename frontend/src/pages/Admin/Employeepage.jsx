@@ -21,20 +21,31 @@ const AllEmployeesPage = () => {
         tags: '', // Will be comma-separated string in input, converted to array on submit
     });
 
+    // State for Delete Confirmation Modal
+    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+    const [employeeToDelete, setEmployeeToDelete] = useState(null); // Stores the employee object to be deleted
+
+    // State for Search
+    const [searchTerm, setSearchTerm] = useState('');
+
+    // Function to fetch employees (extracted for reusability)
+    const fetchEmployees = async () => {
+        setLoading(true);
+        setError('');
+        try {
+            const res = await axios.get('https://comapay-grow-project.onrender.com/api/employees'); // Endpoint to get all employees
+            setEmployees(res.data);
+        } catch (err) {
+            console.error('Error fetching employees:', err);
+            setError('Failed to fetch employee data. Please try again.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
-        const fetchEmployees = async () => {
-            try {
-                const res = await axios.get('https://comapay-grow-project.onrender.com/api/employees'); // Endpoint to get all employees
-                setEmployees(res.data);
-            } catch (err) {
-                console.error('Error fetching employees:', err);
-                setError('Failed to fetch employee data.');
-            } finally {
-                setLoading(false);
-            }
-        };
         fetchEmployees();
-    }, []);
+    }, []); // Fetch employees on component mount
 
     const handleCardClick = (employeeId) => {
         navigate(`/employees/${employeeId}`); // Navigate to the specific employee's profile
@@ -64,10 +75,7 @@ const AllEmployeesPage = () => {
             await axios.post('https://comapay-grow-project.onrender.com/api/employees/register', payload);
             alert('Employee added successfully!');
             handleCloseAddModal(); // Close modal and reset form
-            setLoading(true); // Set loading to true to re-fetch
-            const res = await axios.get('https://comapay-grow-project.onrender.com/api/employees'); // Re-fetch employees
-            setEmployees(res.data);
-            setLoading(false);
+            fetchEmployees(); // Re-fetch employees to update the list
         } catch (err) {
             console.error('Error adding employee:', err.response ? err.response.data : err.message);
             alert(`Failed to add employee: ${err.response?.data?.message || err.message}`);
@@ -86,6 +94,48 @@ const AllEmployeesPage = () => {
         });
     };
 
+    // --- Delete Functionality ---
+    const handleDeleteClick = (employee, e) => {
+        e.stopPropagation(); // Prevent card click when delete button is pressed
+        setEmployeeToDelete(employee);
+        setShowDeleteConfirm(true);
+    };
+
+    const confirmDelete = async () => {
+        if (!employeeToDelete) return;
+
+        try {
+            // Assuming your backend uses userId for delete, adjust if it uses _id
+            await axios.delete(`https://comapay-grow-project.onrender.com/api/employees/${employeeToDelete.userId}`);
+            alert('Employee deleted successfully!');
+            fetchEmployees(); // Re-fetch employees to update the list
+            cancelDelete(); // Close the confirmation modal
+        } catch (err) {
+            console.error('Error deleting employee:', err.response ? err.response.data : err.message);
+            alert(`Failed to delete employee: ${err.response?.data?.message || err.message}`);
+        }
+    };
+
+    const cancelDelete = () => {
+        setShowDeleteConfirm(false);
+        setEmployeeToDelete(null); // Clear the employee to delete
+    };
+
+    // --- Search/Filter Functionality ---
+    const handleSearchChange = (e) => {
+        setSearchTerm(e.target.value);
+    };
+
+    const filteredEmployees = employees.filter(employee => {
+        const lowerCaseSearchTerm = searchTerm.toLowerCase();
+        const matchesName = employee.name.toLowerCase().includes(lowerCaseSearchTerm);
+        const matchesTags = employee.tags && employee.tags.some(tag =>
+            tag.toLowerCase().includes(lowerCaseSearchTerm)
+        );
+        return matchesName || matchesTags;
+    });
+
+
     if (loading) return <p className={styles['loading-message']}>Loading employees...</p>;
     if (error) return <p className={styles['error-message']}>{error}</p>;
 
@@ -95,18 +145,29 @@ const AllEmployeesPage = () => {
             <main className={styles['admin-main']}>
                 <h1 className={styles['page-title']}>All Employees</h1>
 
-                <button
-                    className={styles['add-employee-btn']}
-                    onClick={() => setShowAddModal(true)}
-                >
-                    + Add Employee
-                </button>
+                <div className={styles['action-bar']}>
+                    <input
+                        type="text"
+                        placeholder="Search by name or tag..."
+                        className={styles['search-input']}
+                        value={searchTerm}
+                        onChange={handleSearchChange}
+                    />
+                    <button
+                        className={styles['add-employee-btn']}
+                        onClick={() => setShowAddModal(true)}
+                    >
+                        + Add Employee
+                    </button>
+                </div>
 
                 <div className={styles['employees-container']}>
-                    {employees.length === 0 ? (
-                        <p className={styles['no-employees-message']}>No employees found. Add one!</p>
+                    {filteredEmployees.length === 0 ? (
+                        <p className={styles['no-employees-message']}>
+                            {searchTerm ? `No employees found matching "${searchTerm}".` : 'No employees found. Add one!'}
+                        </p>
                     ) : (
-                        employees.map(employee => (
+                        filteredEmployees.map(employee => (
                             <div
                                 key={employee._id}
                                 className={styles['employee-card']}
@@ -123,10 +184,10 @@ const AllEmployeesPage = () => {
                                     {/* <p className={styles['employee-detail']}>
                                         <strong>Amount:</strong> ₹{employee.amount !== undefined ? employee.amount : 'N/A'}
                                     </p> */}
-                                    {/* <p className={styles['employee-detail']}>
+                                    <p className={styles['employee-detail']}>
                                         <strong>Badges:</strong>{' '}
                                         {employee.badges && employee.badges.length > 0 ? employee.badges.join(', ') : 'None'}
-                                    </p> */}
+                                    </p>
                                     <p className={styles['employee-detail']}>
                                         <strong>Tags:</strong>{' '}
                                         {employee.tags && employee.tags.length > 0 ? employee.tags.join(', ') : 'None'}
@@ -141,6 +202,12 @@ const AllEmployeesPage = () => {
                                         }}
                                     >
                                         View Profile
+                                    </button>
+                                    <button
+                                        className={`${styles['base-button']} ${styles['delete-employee-btn']}`}
+                                        onClick={(e) => handleDeleteClick(employee, e)}
+                                    >
+                                        Delete
                                     </button>
                                 </div>
                             </div>
@@ -203,25 +270,6 @@ const AllEmployeesPage = () => {
                                     {/* Add other roles as needed */}
                                 </select>
 
-                                {/* Removed Amount field from the form */}
-                                {/* <label className={styles['form-label']}>Amount</label>
-                                <input
-                                    type="number"
-                                    className={styles['form-input']}
-                                    value={newEmployee.amount}
-                                    onChange={e => setNewEmployee({ ...newEmployee, amount: Number(e.target.value) })}
-                                /> */}
-
-                                {/* Removed Badges field from the form */}
-                                {/* <label className={styles['form-label']}>Badges (comma separated)</label>
-                                <input
-                                    type="text"
-                                    className={styles['form-input']}
-                                    value={newEmployee.badges}
-                                    onChange={e => setNewEmployee({ ...newEmployee, badges: e.target.value })}
-                                    placeholder="e.g., Star Performer, Innovator"
-                                /> */}
-
                                 <label className={styles['form-label']}>Tags (comma separated)</label>
                                 <input
                                     type="text"
@@ -240,6 +288,25 @@ const AllEmployeesPage = () => {
                                     </button>
                                 </div>
                             </form>
+                        </div>
+                    </>
+                )}
+
+                {/* Delete Confirmation Modal */}
+                {showDeleteConfirm && employeeToDelete && (
+                    <>
+                        <div className={styles.overlay} onClick={cancelDelete}></div>
+                        <div className={styles.modal}>
+                            <h2 className={styles['modal-title']}>Confirm Deletion</h2>
+                            <p>Are you sure you want to delete employee <strong>{employeeToDelete.name} ({employeeToDelete.userId})</strong>?</p>
+                            <div className={styles['modal-actions']}>
+                                <button type="button" className={`${styles['base-button']} ${styles['delete-confirm-btn']}`} onClick={confirmDelete}>
+                                    Yes, Delete
+                                </button>
+                                <button type="button" className={`${styles['base-button']} ${styles['secondary-btn']}`} onClick={cancelDelete}>
+                                    Cancel
+                                </button>
+                            </div>
                         </div>
                     </>
                 )}

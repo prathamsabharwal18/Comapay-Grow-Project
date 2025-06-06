@@ -3,6 +3,7 @@ import Employee from '../models/Employee.js';
 import Course from '../models/Course.js';
 import Project from '../models/Project.js';
 import { registerEmployee } from '../controllers/employeeController.js';
+import { deleteEmployee, /* ... other employee controller functions */ } from '../controllers/employeeController.js'; // Adjust path
 
 const router = express.Router();
 
@@ -382,6 +383,6 @@ router.get('/profile/:userId', async (req, res) => {
   }
 });
 router.post('/register', registerEmployee);
-
+router.delete('/:userId', deleteEmployee);
 
 export default router;

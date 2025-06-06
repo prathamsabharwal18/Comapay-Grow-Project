@@ -62,3 +62,31 @@ export const registerEmployee = async (req, res) => {
         res.status(500).json({ message: 'Server error during employee registration.', error: error.message });
     }
 };
+export const deleteEmployee = async (req, res) => {
+    try {
+        const { userId } = req.params; // Get userId from URL parameters
+
+        const deletedEmployee = await Employee.findOneAndDelete({ userId });
+
+        if (!deletedEmployee) {
+            return res.status(404).json({ message: 'Employee not found.' });
+        }
+
+        res.status(200).json({ message: 'Employee deleted successfully.', employee: deletedEmployee });
+
+    } catch (error) {
+        console.error('Error deleting employee:', error);
+        res.status(500).json({ message: 'Server error during employee deletion.', error: error.message });
+    }
+};
+
+// You'll also need a controller to fetch all employees for the initial load
+export const getAllEmployees = async (req, res) => {
+    try {
+        const employees = await Employee.find({});
+        res.status(200).json(employees);
+    } catch (error) {
+        console.error('Error fetching all employees:', error);
+        res.status(500).json({ message: 'Server error while fetching employees.', error: error.message });
+    }
+};
