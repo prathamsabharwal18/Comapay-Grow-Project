@@ -97,7 +97,6 @@ const AllEmployeesPage = () => {
     // --- Delete Functionality ---
     const handleDeleteClick = (employee, e) => {
         e.stopPropagation(); // Prevent card click when delete button is pressed
-        console.log('Delete clicked for employee:', employee);
         setEmployeeToDelete(employee);
         setShowDeleteConfirm(true);
     };
