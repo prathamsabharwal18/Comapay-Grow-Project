@@ -131,3 +131,8 @@ form h2 {
   margin-bottom: 1rem;
   font-weight: bold;
 }
+.success-msg {
+  color: green;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
