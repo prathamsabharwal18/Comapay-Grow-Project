@@ -33,7 +33,7 @@ const EmployeeProfilePage = () => {
 
   // Determine which userId to use: URL param first, then localStorage
   const currentUserId = paramUserId || localStorage.getItem('userId');
-
+const userRole = localStorage.getItem('role'); 
   useEffect(() => {
     const fetchEmployee = async () => {
       if (!currentUserId) {
@@ -144,7 +144,7 @@ const EmployeeProfilePage = () => {
 
   return (
     <>
-      <Navbar />
+       {userRole !== 'admin' && <Navbar />}
       <div className={styles.profileContainer}>
         <h1>Employee Profile: {employee.name}</h1>
         <div className={styles.profileTop}>
