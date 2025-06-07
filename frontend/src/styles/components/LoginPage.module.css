@@ -106,7 +106,7 @@ form h2 {
 .password-wrapper .eye {
   position: absolute;
   right: 10px;
-  top: 50%; /* Changed from 70% for better vertical alignment with text baseline */
+  top: 66%; /* Changed from 70% for better vertical alignment with text baseline */
   transform: translateY(-50%);
   color: #555;
   font-size: 1.2rem;
