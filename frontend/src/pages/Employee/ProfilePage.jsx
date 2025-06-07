@@ -171,6 +171,10 @@ const EmployeeProfilePage = () => {
               {employee.badges && employee.badges.length > 0 ? employee.badges.join(', ') : 'None'}
             </p>
             <p>
+              <strong>Tags:</strong>{' '}
+              {employee.tags && employee.tags.length > 0 ? employee.tags.join(', ') : 'None'}
+            </p>
+            <p>
               <strong>Available Amount:</strong> ₹{employee.amount ? employee.amount.toFixed(2) : '0.00'}
             </p>
 
