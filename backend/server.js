@@ -15,7 +15,7 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors({
-  origin: 'https://comapay-grow-project-f5wh.vercel.app', // Replace with your actual Vercel domain
+  origin: 'https://comapay-grow-project.vercel.app', // Replace with your actual Vercel domain
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed methods
     credentials: true, // Allow cookies/authentication headers to be sent
 }));
