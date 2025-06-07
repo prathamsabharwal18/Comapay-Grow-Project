@@ -35,7 +35,8 @@ function LoginPage() {
       }
 
       // Save userId to localStorage
-      localStorage.setItem('userId', data.user.userId);  // <-- store userId here
+      localStorage.setItem('userId', data.user.userId);
+      localStorage.setItem('role', data.user.role);  // <-- store role here
       {console.log(data.user.userId)}
       // Redirect based on role
       if (data.user.role === 'employee') {
