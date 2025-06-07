@@ -115,6 +115,14 @@ body { font-family: Arial, sans-serif; background: #f5f7fa; color: #333; }
   padding: 0.4rem 0.8rem; border-radius: 12px;
   cursor: pointer;
 }
+.course-search {
+ width: 100%; /* Adjust as needed */
+ padding: 8px;
+ margin-bottom: 16px;
+ border: 1px solid #ccc;
+ border-radius: 4px;
+ font-size: 16px;
+}
 .primary-btn {
   background: #0047b3; color: #fff;
   border: none; padding: 0.5rem 1rem;
