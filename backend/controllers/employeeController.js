@@ -89,3 +89,35 @@ export const getAllEmployees = async (req, res) => {
         res.status(500).json({ message: 'Server error while fetching employees.', error: error.message });
     }
 };
+export const resetEmployeeAmount = async (req, res) => {
+    try {
+        const { userId } = req.params; // Get userId from URL parameters (e.g., 'emp03')
+
+        // Find the employee by their custom userId field and set their amount to 0
+        const updatedEmployee = await Employee.findOneAndUpdate(
+            { userId: userId }, // Query: find by the unique userId
+            { amount: 0 },      // Update: set the 'amount' field to 0
+            { new: true }       // Options: return the modified document rather than the original
+        );
+
+        if (!updatedEmployee) {
+            // If no employee found with that userId
+            return res.status(404).json({ message: 'Employee not found.' });
+        }
+
+        // Send a success response with the updated employee data (or just a message)
+        res.status(200).json({ 
+            message: `Amount for ${updatedEmployee.name} withdrawn successfully. New balance: ₹0.00.`,
+            employee: {
+                userId: updatedEmployee.userId,
+                name: updatedEmployee.name,
+                amount: updatedEmployee.amount // This will be 0
+            }
+        });
+
+    } catch (error) {
+        // Handle any server errors during the process
+        console.error('Error resetting employee amount:', error);
+        res.status(500).json({ message: 'Server error during withdrawal process.', error: error.message });
+    }
+};

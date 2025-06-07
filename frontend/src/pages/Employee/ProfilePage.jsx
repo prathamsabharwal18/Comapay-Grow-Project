@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Navbar from '../../components/Navbar'; // Assuming this Navbar is appropriate for employees
 import styles from '../../styles/Employee/ProfilePage.module.css';
-import { Doughnut , Bar} from 'react-chartjs-2';
+import { Doughnut, Bar } from 'react-chartjs-2';
 import { useParams } from 'react-router-dom'; // Import useParams
 import {
   Chart as ChartJS,
@@ -11,7 +11,7 @@ import {
   Legend,
   CategoryScale,
   LinearScale,
-  BarElement, // Keep BarElement if you plan to re-add the earnings bar chart later
+  BarElement,
 } from 'chart.js';
 
 ChartJS.register(
@@ -20,7 +20,7 @@ ChartJS.register(
   Legend,
   CategoryScale,
   LinearScale,
-  BarElement // Register it if you kept it in imports
+  BarElement
 );
 
 const EmployeeProfilePage = () => {
@@ -28,10 +28,8 @@ const EmployeeProfilePage = () => {
   const [employee, setEmployee] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [withdrawLoading, setWithdrawLoading] = useState(false);
-  const [withdrawMessage, setWithdrawMessage] = useState('');
-  const [createAccountLoading, setCreateAccountLoading] = useState(false);
-  const [createAccountMessage, setCreateAccountMessage] = useState('');
+  const [withdrawLoading, setWithdrawLoading] = useState(false); // State for withdraw button loading
+  const [withdrawMessage, setWithdrawMessage] = useState(''); // State for withdraw success/error messages
 
   // Determine which userId to use: URL param first, then localStorage
   const currentUserId = paramUserId || localStorage.getItem('userId');
@@ -44,7 +42,8 @@ const EmployeeProfilePage = () => {
         return;
       }
       try {
-        const res = await axios.get(`https://comapay-grow-project.onrender.com/api/employees/${currentUserId}`); // Use currentUserId
+        // Fetch employee profile data, including populated courses and projects
+        const res = await axios.get(`https://comapay-grow-project.onrender.com/api/employees/profile/${currentUserId}`);
         setEmployee(res.data);
       } catch (err) {
         setError('Failed to fetch employee data. User might not exist or network issue.');
@@ -56,19 +55,55 @@ const EmployeeProfilePage = () => {
     fetchEmployee();
   }, [currentUserId]); // Dependency on currentUserId
 
+  // Handle Withdrawal function
+  const handleWithdraw = async () => {
+    if (employee.amount <= 0) {
+      setWithdrawMessage('No amount to withdraw.');
+      return;
+    }
+
+    setWithdrawLoading(true);
+    setWithdrawMessage(''); // Clear previous messages
+
+    try {
+      // Make a PUT request to your backend to reset the employee's amount to 0
+      // You'll need to create this endpoint in your backend (e.g., /api/employees/reset-amount/:userId)
+      const res = await axios.put(`https://comapay-grow-project.onrender.com/api/employees/reset-amount/${currentUserId}`);
+
+      if (res.status === 200) {
+        setWithdrawMessage('Amount withdrawn successfully! Your balance has been reset to ₹0.00.');
+        // Optimistically update the UI to show 0 amount immediately
+        setEmployee(prevEmployee => ({
+          ...prevEmployee,
+          amount: 0,
+        }));
+      } else {
+        setWithdrawMessage('Withdrawal failed: Unexpected response from server.');
+      }
+    } catch (err) {
+      console.error('Error during withdrawal:', err);
+      setWithdrawMessage(`Withdrawal failed: ${err.response?.data?.message || err.message}`);
+    } finally {
+      setWithdrawLoading(false);
+    }
+  };
+
+
   if (loading) return <p>Loading profile...</p>;
   if (error) return <p style={{ color: 'red' }}>{error}</p>;
   if (!employee) return <p>No employee data found.</p>;
 
   // Prepare data for Course Completion Chart:
-  const totalCourses = employee.enrolledCourses.length + employee.completedCourses.length;
+  const allCourseIds = new Set([...employee.enrolledCourses.map(c => c._id), ...employee.completedCourses.map(c => c._id)]);
+  const totalUniqueCourses = allCourseIds.size;
+
   const courseDoughnutData = {
-    labels: ['Completed Courses', 'Enrolled but Incomplete'],
+    labels: ['Completed Courses', 'Enrolled (In Progress)'],
     datasets: [
       {
         label: 'Courses',
         data: [employee.completedCourses.length, employee.enrolledCourses.length],
-        backgroundColor: ['#4CAF50', '#F44336'],
+        backgroundColor: ['#4CAF50', '#F44336'], // Green for completed, Red for in progress
         hoverOffset: 10,
         borderColor: '#ffffff',
         borderWidth: 2,
@@ -77,14 +112,17 @@ const EmployeeProfilePage = () => {
   };
 
   // Prepare data for Projects Doughnut Chart:
-  const assignedButNotCompleted = employee.projects.length - employee.completedProjects.length;
+  const assignedProjectsCount = employee.projects ? employee.projects.length : 0;
+  const completedProjectsCount = employee.completedProjects ? employee.completedProjects.length : 0;
+  const inProgressProjectsCount = assignedProjectsCount - completedProjectsCount;
+
   const projectDoughnutData = {
     labels: ['Completed Projects', 'Assigned (In Progress) Projects'],
     datasets: [
       {
         label: 'Projects',
-        data: [employee.completedProjects.length, assignedButNotCompleted > 0 ? assignedButNotCompleted : 0],
-        backgroundColor: ['#2196F3', '#FFC107'],
+        data: [completedProjectsCount, inProgressProjectsCount > 0 ? inProgressProjectsCount : 0],
+        backgroundColor: ['#2196F3', '#FFC107'], // Blue for completed, Amber for in progress
         hoverOffset: 10,
         borderColor: '#ffffff',
         borderWidth: 2,
@@ -92,33 +130,23 @@ const EmployeeProfilePage = () => {
     ],
   };
 
-  // Earnings Bar Chart Data (re-added for completeness, as it was in your original snippet)
+  // Earnings Bar Chart Data
   const barData = {
     labels: ['Available Amount (₹)'],
     datasets: [
       {
         label: 'Earnings',
         data: [employee.amount],
-        backgroundColor: '#2196f3',
+        backgroundColor: '#2196f3', // Blue for earnings
       },
     ],
-  };
-
-
-  // Stripe related functions (unchanged)
-  const handleWithdraw = async () => {
-    // ... (Your existing handleWithdraw logic) ...
-  };
-
-  const handleCreateStripeAccount = async () => {
-    // ... (Your existing handleCreateStripeAccount logic) ...
   };
 
   return (
     <>
       <Navbar />
       <div className={styles.profileContainer}>
-        <h1>Employee Profile: {employee.name}</h1> {/* Updated title */}
+        <h1>Employee Profile: {employee.name}</h1>
         <div className={styles.profileTop}>
           <div className={styles.photoPlaceholder}>
             <span role="img" aria-label="profile" style={{ fontSize: '5rem' }}>
@@ -143,43 +171,22 @@ const EmployeeProfilePage = () => {
               {employee.badges && employee.badges.length > 0 ? employee.badges.join(', ') : 'None'}
             </p>
             <p>
-              <strong>Available Amount:</strong> ₹{employee.amount.toFixed(2)}
+              <strong>Available Amount:</strong> ₹{employee.amount ? employee.amount.toFixed(2) : '0.00'}
             </p>
 
-            {/* Stripe Account Linking/Withdrawal (conditionally rendered for self-profile or admin interaction) */}
-            {paramUserId === undefined || paramUserId === localStorage.getItem('userId') ? ( // Only show for own profile
-                employee.stripeAccountId ? (
-                    <>
-                        <p style={{ color: 'green' }}>Stripe Account Linked</p>
-                        <button
-                            onClick={handleWithdraw}
-                            disabled={withdrawLoading || employee.amount <= 0}
-                            className={styles.withdrawBtn}
-                        >
-                            {withdrawLoading ? 'Processing...' : 'Withdraw Amount'}
-                        </button>
-                    </>
-                ) : (
-                    <>
-                        <p style={{ color: 'red' }}>No Stripe Account Linked</p>
-                        <button
-                            onClick={handleCreateStripeAccount}
-                            disabled={createAccountLoading}
-                            className={styles.withdrawBtn}
-                        >
-                            {createAccountLoading ? 'Creating Stripe Account...' : 'Create Stripe Account'}
-                        </button>
-                        {createAccountMessage && (
-                            <p style={{ color: createAccountMessage.includes('success') || createAccountMessage.includes('Redirecting') ? 'green' : 'red' }}>
-                                {createAccountMessage}
-                            </p>
-                        )}
-                    </>
-                )
-            ) : (
-                <p style={{color: '#666', fontSize: '0.9em'}}>Stripe account management available on your own profile.</p>
+            {/* Withdraw Button */}
+            <button
+              onClick={handleWithdraw}
+              disabled={withdrawLoading || employee.amount <= 0} // Disable if loading or amount is zero
+              className={styles.withdrawBtn}
+            >
+              {withdrawLoading ? 'Processing Withdrawal...' : 'Withdraw Amount'}
+            </button>
+            {withdrawMessage && (
+              <p className={withdrawMessage.includes('successfully') ? styles.successMsg : styles.errorMsg}>
+                {withdrawMessage}
+              </p>
             )}
-            {withdrawMessage && <p className={styles.withdrawMsg}>{withdrawMessage}</p>}
           </div>
         </div>
 
@@ -187,18 +194,23 @@ const EmployeeProfilePage = () => {
           <div className={styles.chartBox}>
             <h3>Course Completion</h3>
             <Doughnut data={courseDoughnutData} />
+            <p className={styles.chartSummary}>
+              {employee.completedCourses.length} of {totalUniqueCourses} courses completed.
+            </p>
           </div>
           <div className={styles.chartBox}>
             <h3>Project Status</h3>
             <Doughnut data={projectDoughnutData} />
+            <p className={styles.chartSummary}>
+              {completedProjectsCount} of {assignedProjectsCount} projects completed.
+            </p>
           </div>
-          {/* Re-adding the Earnings chart as it was in your original component,
-              though it might not be relevant for *other* employee profiles visually.
-              You could wrap this in a condition if you only want it on the employee's own profile.
-          */}
           <div className={styles.chartBox}>
-            <h3>Earnings</h3>
+            <h3>Earnings Overview</h3>
             <Bar data={barData} options={{ scales: { y: { beginAtZero: true } } }} />
+            <p className={styles.chartSummary}>
+              Total available earnings: ₹{employee.amount ? employee.amount.toFixed(2) : '0.00'}
+            </p>
           </div>
         </div>
       </div>

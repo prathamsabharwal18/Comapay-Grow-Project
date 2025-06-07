@@ -2,19 +2,26 @@ import express from 'express';
 import Employee from '../models/Employee.js';
 import Course from '../models/Course.js';
 import Project from '../models/Project.js';
-import { registerEmployee, deleteEmployee } from '../controllers/employeeController.js';
+import { registerEmployee, deleteEmployee,resetEmployeeAmount } from '../controllers/employeeController.js';
 
 const router = express.Router();
 
-// --- HIGHLY SPECIFIC ROUTES FIRST ---
 
-// 1. Employee Registration (Specific POST route)
 router.post('/register', registerEmployee);
 
-// 2. Employee Deletion by userId (Most specific DELETE route, must be before generic :id or :projectId deletes)
+
+
+
 router.delete('/remove/:userId', deleteEmployee);
 
-// 3. Get Employee Profile by userId (More specific GET than /:id, comes before it)
+
+
+
+router.put('/reset-amount/:userId', resetEmployeeAmount);
+
+
+
+
 router.get('/profile/:userId', async (req, res) => {
   const { userId } = req.params;
   try {
@@ -35,7 +42,8 @@ router.get('/profile/:userId', async (req, res) => {
   }
 });
 
-// 4. Employee Login (Specific POST route)
+
+
 router.post('/login', async (req, res) => {
   const { userId, password } = req.body;
   try {
@@ -53,7 +61,9 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// 5. Get employees by names (Specific path)
+
+
+
 router.get('/by-names', async (req, res) => {
   const namesParam = req.query.names;
   if (!namesParam) return res.status(400).json({ message: 'Missing names query parameter' });
@@ -66,7 +76,9 @@ router.get('/by-names', async (req, res) => {
   }
 });
 
-// 6. Get ObjectIds from userIds (Specific path)
+
+
+
 router.get('/by-userIds', async (req, res) => {
   try {
     const idsParam = req.query.ids;
@@ -86,7 +98,9 @@ router.get('/by-userIds', async (req, res) => {
   }
 });
 
-// 7. Get employee names from an array of ObjectIds (Specific path)
+
+
+
 router.post('/names-from-ids', async (req, res) => {
   try {
     const { ids } = req.body;
@@ -100,9 +114,10 @@ router.post('/names-from-ids', async (req, res) => {
   }
 });
 
-// --- ROUTES DEALING WITH PROJECTS/TASKS (often use specific prefixes or multiple params) ---
 
-// Toggle task completion on a project
+
+
+
 router.post('/projects/:projectId/toggleTask', async (req, res) => {
   const { projectId } = req.params;
   const { taskIndex } = req.body;
@@ -119,7 +134,10 @@ router.post('/projects/:projectId/toggleTask', async (req, res) => {
   }
 });
 
-// Add employee to project by IDs
+
+
+
+
 router.put('/:projectId/add-employee', async (req, res) => {
   const { projectId } = req.params;
   const { employeeId } = req.body;
@@ -144,7 +162,9 @@ router.put('/:projectId/add-employee', async (req, res) => {
   }
 });
 
-// Update project - this route uses assignedEmployeeUserIds (array of userIds)
+
+
+
 router.put('/edit/:projectId', async (req, res) => {
   const { projectId } = req.params;
   const { title, description, tasks, assignedEmployeeUserIds, amount } = req.body;
@@ -196,9 +216,9 @@ router.put('/edit/:projectId', async (req, res) => {
 });
 
 
-// --- GENERIC ROUTES WITH PARAMETERS (ordered by specificity if possible, but generally below very specific paths) ---
 
-// Get enrolled courses for employee by :id (userId)
+
+
 router.get('/:id/enrolledCourses', async (req, res) => {
   try {
     const employee = await Employee.findOne({ userId: req.params.id }).populate('enrolledCourses');
@@ -209,7 +229,10 @@ router.get('/:id/enrolledCourses', async (req, res) => {
   }
 });
 
-// Get completed courses for employee by :id (userId)
+
+
+
+
 router.get('/:id/completedCourses', async (req, res) => {
   try {
     const employee = await Employee.findOne({ userId: req.params.id }).populate('completedCourses');
@@ -220,7 +243,10 @@ router.get('/:id/completedCourses', async (req, res) => {
   }
 });
 
-// Complete course for employee by :id (userId)
+
+
+
+
 router.post('/:id/completeCourse', async (req, res) => {
   const { courseId } = req.body;
   const { id: userId } = req.params;
@@ -250,7 +276,10 @@ router.post('/:id/completeCourse', async (req, res) => {
   }
 });
 
-// Get assigned projects for employee by userId
+
+
+
+
 router.get('/:id/assignedProjects', async (req, res) => {
   try {
     const employee = await Employee.findOne({ userId: req.params.id });
@@ -342,17 +371,13 @@ router.put('/:id/complete-project', async (req, res) => {
   }
 });
 
-// --- GENERIC CATCH-ALLS (MUST BE LAST) ---
 
-// Delete project by projectId and remove references from employees (more general DELETE than /remove/:userId)
+
+
+
 router.delete('/:projectId', async (req, res) => {
   const { projectId } = req.params;
   try {
-    // Optional: Add a check here if projectId is a valid MongoDB ObjectId
-    // if (!mongoose.Types.ObjectId.isValid(projectId)) {
-    //   return res.status(400).json({ message: 'Invalid Project ID format' });
-    // }
-
     const project = await Project.findById(projectId);
     if (!project) return res.status(404).json({ message: 'Project not found' });
 
@@ -369,7 +394,10 @@ router.delete('/:projectId', async (req, res) => {
   }
 });
 
-// Get all employees (very general GET route, but specifically for a list, so fine here)
+
+
+
+
 router.get('/', async (req, res) => {
   try {
     const employees = await Employee.find({}, 'userId name Email role badges tags');
@@ -379,8 +407,11 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Get employee by userId (most generic GET route with a parameter, should be near the end)
-// This will catch any `/api/employees/anything` that hasn't been caught by more specific routes.
+
+
+
+
+
 router.get('/:id', async (req, res) => {
   try {
     const employee = await Employee.findOne({ userId: req.params.id });
