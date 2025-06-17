@@ -35,7 +35,6 @@
 ### 📊 Performance Analytics
 - Track course and project progress using graphs and dashboards.
 - Visualize performance over time (monthly/time-based breakdowns).
-- Export progress reports (CSV or PDF).
 
 ### 🧭 Admin Dashboard
 - Central dashboard for managing employees, courses, and projects.
@@ -54,9 +53,6 @@
 
 ### Database
 - `MongoDB` or `PostgreSQL`
-
-### PDF Generation
-- `pdf-lib` or `jsPDF` – for generating downloadable reports
 
 ### Analytics & Graphs
 - `Chart.js` or `Recharts` – for data visualization
